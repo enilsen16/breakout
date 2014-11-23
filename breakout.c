@@ -73,7 +73,7 @@ int main(void)
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
-        // TODO
+
     }
 
     // wait for click before exiting
@@ -89,7 +89,7 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-    // TODO
+  
 }
 
 /**
