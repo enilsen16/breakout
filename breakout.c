@@ -89,7 +89,10 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-  
+  GRect brick = newGRect(0, 100, 20, 15);
+  setColor(brick, "GREEN");
+  setFilled(brick, true);
+  add(window, brick);
 }
 
 /**
