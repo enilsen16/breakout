@@ -25,7 +25,7 @@
 #define ROWS 5
 
 // number of columns of bricks
-#define COLS 10
+#define COLS 8
 
 // radius of ball in pixels
 #define RADIUS 10
@@ -71,6 +71,8 @@ int main(void)
     int points = 0;
 
     // keep playing until game over
+    double YVelocity = drand48()+2.0;
+    double XVelocity = 2.0;
     while (lives > 0 && bricks > 0)
     {
       GEvent event = getNextEvent(MOUSE_EVENT);
@@ -82,9 +84,53 @@ int main(void)
               setLocation(paddle, x, 525);
             }
         }
+        move(ball, XVelocity, YVelocity);
+        if (getY(ball) + getHeight(ball) >= getHeight(window))
+           {
+            removeGWindow(window, ball);
+            lives -= 1;
+            ball = initBall(window);
+            removeGWindow(window, paddle);
+            paddle = initPaddle(window);
+            if (lives != 0) waitForClick();
+          }
+
+          else if (getY(ball) <= 0)
+          {
+            YVelocity = -YVelocity;
+          }
+          if (getX(ball) + getWidth(ball) >= getWidth(window))
+            {
+              XVelocity = -XVelocity;
+            }
+
+            else if (getX(ball) <= 0)
+            {
+              XVelocity = -XVelocity;
+            }
+
+          pause(5);
+
+          GObject object = detectCollision(window, ball);
+          if ( object != NULL)
+            {
+          if (object == paddle)
+            {
+              YVelocity = -YVelocity;
+            }
+        else if (strcmp(getType(object), "G3DRect") == 0)
+          {
+            removeGWindow(window, object);
+            YVelocity = -YVelocity;
+            bricks -= 1;
+            points += 1;
+            updateScoreboard(window, label, points);
+          }
+
+            }
     }
 
-    // wait for click before exiting
+    //wait for click before exiting
     waitForClick();
 
     // game over
@@ -117,11 +163,11 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-  GOval circle = newGOval(200, 400, 20, 20);
-  setColor(circle, "BLACK");
-  setFilled(circle, true);
-  add(window, circle);
-  return circle;
+  GOval ball = newGOval(190, 400, 20, 20);
+  setColor(ball, "BLACK");
+  setFilled(ball, true);
+  add(window, ball);
+  return ball;
 }
 
 /**
