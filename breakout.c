@@ -109,7 +109,11 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
- return NULL;
+  GOval circle = newGOval(200, 450, 20, 20);
+  setColor(circle, "BLACK");
+  setFilled(circle, true);
+  add(window, circle);
+  return circle;
 }
 
 /**
