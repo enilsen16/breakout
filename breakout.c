@@ -89,10 +89,19 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-  GRect brick = newGRect(0, 100, 20, 15);
-  setColor(brick, "GREEN");
+  string color[5] = {"GREEN", "YELLOW", "BLUE", "RED", "ORANGE"};
+  srand ( time(NULL) );
+  for (int i = 0; i < 8; i++ )
+    {
+    for (int n = 0; n < 5; n++ )
+      {
+  G3DRect brick = newG3DRect((26.4 + (43.9 * i)), 50 + (22 * n), 40, 20, true);
+  setColor(brick, color[rand()%5]);
   setFilled(brick, true);
   add(window, brick);
+
+      }
+  }
 }
 
 /**
@@ -100,8 +109,7 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-    // TODO
-    return NULL;
+ return NULL;
 }
 
 /**
