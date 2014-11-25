@@ -73,7 +73,15 @@ int main(void)
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
-
+      GEvent event = getNextEvent(MOUSE_EVENT);
+      if (event != NULL)
+        {
+          if (getEventType(event) == MOUSE_MOVED)
+            {
+              double x = getX(event) - getWidth(paddle) / 2;
+              setLocation(paddle, x, 525);
+            }
+        }
     }
 
     // wait for click before exiting
@@ -109,7 +117,7 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-  GOval circle = newGOval(200, 450, 20, 20);
+  GOval circle = newGOval(200, 400, 20, 20);
   setColor(circle, "BLACK");
   setFilled(circle, true);
   add(window, circle);
@@ -121,8 +129,12 @@ GOval initBall(GWindow window)
  */
 GRect initPaddle(GWindow window)
 {
-    // TODO
-    return NULL;
+    GRect paddle = newGRect(175, 525, 50, 10);
+    setColor(paddle, "BLACK");
+    setFilled(paddle, true);
+    add(window, paddle);
+    return paddle;
+
 }
 
 /**
@@ -130,8 +142,13 @@ GRect initPaddle(GWindow window)
  */
 GLabel initScoreboard(GWindow window)
 {
-    // TODO
-    return NULL;
+  double x, y;
+  GLabel label = newGLabel("0");
+  x = (getWidth(window) - getWidth(label)) / 2;
+  y = (getHeight(window) + getFontAscent(label)) / 2;
+  setLocation(label, x, y);
+  add(window, label);
+  return label;
 }
 
 /**
